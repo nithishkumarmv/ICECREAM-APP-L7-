@@ -186,47 +186,6 @@ const UserDashboard = () => {
                 )}
             </div>
 
-            {/* My Orders Section */}
-            <h3>My Orders</h3>
-            <table className="orders-table">
-                <thead>
-                    <tr>
-                        <th>Order Date</th>
-                        <th>Items</th>
-                        <th>Total Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orders && orders.length === 0 ? (
-                        <tr>
-                            <td colSpan="3">No orders yet.</td>
-                        </tr>
-                    ) : (
-                        orders.map((order, index) => (
-                            <tr key={index}>
-                                <td>{order.date}</td>
-                                <td>
-                                    <ul>
-                                        {order.cart && order.cart.length > 0 ? (
-                                            order.cart.map((item, itemIndex) => (
-                                                <li key={itemIndex}>
-                                                    {item.name} - {item.quantity} x RS:{item.price.toFixed(2)}
-                                                </li>
-                                            ))
-                                        ) : (
-                                            <li>No items in this order.</li>
-                                        )}
-                                    </ul>
-                                </td>
-                                <td>
-                                    {/* Ensure order.cart exists and is an array before using .reduce() */}
-                                    RS:{order.cart && Array.isArray(order.cart) ? order.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0).toFixed(2) : 0}
-                                </td>
-                            </tr>
-                        ))
-                    )}
-                </tbody>
-            </table>
         </div>
     );
 };
