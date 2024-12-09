@@ -1,0 +1,21 @@
+.ingredient-item {
+    margin: 5px 0;
+}
+
+.flavor-selector,
+.ingredient-selector {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

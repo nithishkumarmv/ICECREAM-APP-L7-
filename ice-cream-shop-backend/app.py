@@ -1,6 +1,7 @@
 import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from dummy import flavors, ingredients
 
 app = Flask(__name__)
 CORS(app)
@@ -27,6 +28,18 @@ def init_db():
             ice_cream_name TEXT,
             quantity INTEGER,
             total_price REAL)''')
+            # Create the custom_orders table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS custom_orders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT,
+                flavor TEXT,
+                ingredients TEXT,
+                total_price REAL,
+                date TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
         conn.commit()
 
 
@@ -47,7 +60,13 @@ def add_sample_users():
             ('bob_brown', 'Mint', 1, 3.25),
             ('charlie_davis', 'Cookie Dough', 2, 700)
         ])
+        cursor.execute('''
+                INSERT OR IGNORE INTO ingredients (name, price) VALUES
+                    ('Chocolate Chips', 20),
+                    ('Strawberry Sauce', 30)
+            ''')
         conn.commit()
+
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -64,9 +83,6 @@ def login():
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
     
-
-
-
 
 # Route to add a new ice cream
 @app.route('/api/ice-creams', methods=['POST'])
@@ -111,7 +127,7 @@ def get_ice_creams():
     return jsonify(ice_creams)
 
 
-
+#Route to add orders
 @app.route('/api/orders', methods=['POST'])
 def create_order():
     try:
@@ -140,6 +156,7 @@ def create_order():
         print(f"Error placing order: {e}")
         return jsonify({'message': 'Failed to place the order'}), 500
 
+#Route to get all order details
 @app.route('/api/orders', methods=['GET'])
 def get_orders():
     try:
@@ -154,6 +171,18 @@ def get_orders():
         print(f"Error retrieving orders: {e}")
         return jsonify({'message': 'Failed to retrieve orders'}), 500
 
+
+# Endpoint to get available flavors
+@app.route('/api/flavors', methods=['GET'])
+def get_flavors():
+    return jsonify(flavors)
+
+# Endpoint to get available ingredients
+@app.route('/api/ingredients', methods=['GET'])
+def get_ingredients():
+    return jsonify(ingredients)
+
+    
 
 if __name__ == '__main__':
     init_db()

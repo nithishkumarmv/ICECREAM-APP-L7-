@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './css/UserDashboard.css';
+import IceCreamCustomizer from './IceCreamCustomizer';
 
 const UserDashboard = () => {
     const [iceCreams, setIceCreams] = useState([]);
@@ -185,7 +186,7 @@ const UserDashboard = () => {
                     </div>
                 )}
             </div>
-
+            <IceCreamCustomizer />
         </div>
     );
 };
