@@ -38,8 +38,9 @@ A web application for managing ice cream orders with user and admin features.
 - *Backend*: Flask  
 - *Database*: SQLite  
 - *API Communication*: RESTful APIs (JSON)
+  
 
-##🔧 Installation and Setup
+## 🔧 Installation and Setup
 
 ### Clone the Repository
 ```bash
@@ -61,7 +62,6 @@ cd .\ICECREAM-APP-L7-\ice-cream-shop-frontend\
 npm install
 npm start
 ```
----
 ## Default Credentials
 
 ### user login
