@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/UserDashboard1.css'; 
+import './css/UserDashboard1.css';
 
 const AdminIceCreamManager = () => {
     const [iceCreams, setIceCreams] = useState([]);
+    const [orders, setOrders] = useState([]);  // State for orders
     const [newName, setNewName] = useState('');
     const [newPrice, setNewPrice] = useState('');
     const [editingId, setEditingId] = useState(null);
@@ -18,8 +19,19 @@ const AdminIceCreamManager = () => {
         }
     };
 
+    // Fetch orders (only recent 10)
+    const fetchOrders = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/orders');
+            setOrders(response.data.slice(0, 10)); // Display only the latest 10 orders
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+        }
+    };
+
     useEffect(() => {
         fetchIceCreams();
+        fetchOrders();
     }, []);
 
     // Add new ice cream
@@ -91,6 +103,7 @@ const AdminIceCreamManager = () => {
                 )}
             </div>
 
+            <h3>Ice Cream List</h3>
             <ul className="ice-cream-list1">
                 {iceCreams.map(([id, name, price]) => (
                     <li key={id} className="ice-cream-item">
@@ -100,6 +113,31 @@ const AdminIceCreamManager = () => {
                     </li>
                 ))}
             </ul>
+
+            {/* Orders Table at the bottom */}
+            <h3>Recent Orders</h3>
+            <table className="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>User ID</th>
+                        <th>Ice Cream ID</th>
+                        <th>Quantity</th>
+                        <th>Total Price (RS)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {orders.map((order, index) => (
+                        <tr key={index}>
+                            <td>{order[0]}</td>
+                            <td>{order[1]}</td>
+                            <td>{order[2]}</td>
+                            <td>{order[3]}</td>
+                            <td>{order[4].toFixed(2)}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };

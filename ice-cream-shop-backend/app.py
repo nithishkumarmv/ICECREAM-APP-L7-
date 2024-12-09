@@ -145,7 +145,7 @@ def get_orders():
     try:
         with sqlite3.connect('ice_cream.db') as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT * FROM orders')
+            cursor.execute('SELECT * FROM orders ORDER BY id DESC LIMIT 10')  # Get the latest 10 orders
             orders = cursor.fetchall()
 
         return jsonify(orders), 200
