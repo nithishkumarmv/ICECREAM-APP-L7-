@@ -38,10 +38,7 @@ def add_sample_users():
         cursor.execute("INSERT OR IGNORE INTO users (username, password) VALUES ('user1', 'userpass')")
         cursor.executemany('''INSERT INTO ice_creams (name, price) VALUES (?, ?)''', [
             ('Vanilla', 250),
-            ('Chocolate', 300),
-            ('Strawberry', 275),
-            ('Mint', 325),
-            ('Cookie Dough', 350)
+            ('Chocolate', 300)
         ])
         cursor.executemany('''INSERT INTO orders (username, ice_cream_name, quantity, total_price) VALUES (?, ?, ?, ?)''', [
             ('john_doe', 'Vanilla', 2, 20),
@@ -143,6 +140,19 @@ def create_order():
         print(f"Error placing order: {e}")
         return jsonify({'message': 'Failed to place the order'}), 500
 
+@app.route('/api/orders', methods=['GET'])
+def get_orders():
+    try:
+        with sqlite3.connect('ice_cream.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute('SELECT * FROM orders')
+            orders = cursor.fetchall()
+
+        return jsonify(orders), 200
+
+    except Exception as e:
+        print(f"Error retrieving orders: {e}")
+        return jsonify({'message': 'Failed to retrieve orders'}), 500
 
 
 if __name__ == '__main__':
