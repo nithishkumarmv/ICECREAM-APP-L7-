@@ -1,4 +1,4 @@
-# 🍦 Ice Cream Shop Application
+# 🍦 Ice Cream Cafe Application
 
 A web application for managing ice cream orders with user and admin features.
 
