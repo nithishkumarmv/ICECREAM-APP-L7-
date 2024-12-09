@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/UserDashboard.css';  // Importing CSS file for styles
+import './css/UserDashboard.css'; 
 
 const UserDashboard = () => {
     const [iceCreams, setIceCreams] = useState([]);
@@ -8,8 +8,8 @@ const UserDashboard = () => {
     const [cart, setCart] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
-    const [orders, setOrders] = useState([]); // New state for storing orders
-    const username = 'user1'; // Example username, modify as needed
+    const [orders, setOrders] = useState([]); 
+    const username = 'user1'; 
 
     // Fetch available ice creams and orders
     useEffect(() => {
@@ -79,24 +79,24 @@ const UserDashboard = () => {
             // Map through the cart to create individual orders
             const orderDetails = cart.map(item => ({
                 username,
-                ice_cream_name: item.name, // Name of the ice cream
-                quantity: item.quantity, // Quantity of the item
-                total_price: item.price * item.quantity, // Total price for the item
-                date: new Date().toLocaleString(), // Date and time of the order
+                ice_cream_name: item.name, 
+                quantity: item.quantity, 
+                total_price: item.price * item.quantity, 
+                date: new Date().toLocaleString(), 
             }));
     
-            console.log("Order Details to send:", orderDetails); // Debugging: Check order details
+            console.log("Order Details to send:", orderDetails); 
     
             // Sending each item in the cart separately to the backend
             for (const order of orderDetails) {
                 const response = await axios.post('http://localhost:5000/api/orders', order);
-                console.log('Order placed:', response.data); // Log each order response
+                console.log('Order placed:', response.data); 
             }
     
             // If successful, clear the cart and update orders
             alert('Order placed successfully!');
-            setOrders([orderDetails, ...orders]); // Add new order to the list
-            setCart([]); // Clear the cart
+            setOrders([orderDetails, ...orders]); 
+            setCart([]); 
         } catch (error) {
             console.error('Error booking order:', error);
             alert('There was an error placing your order. Please try again.');

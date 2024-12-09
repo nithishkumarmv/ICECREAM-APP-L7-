@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/UserDashboard1.css';  // Importing CSS file for styles
+import './css/UserDashboard1.css'; 
 
 const AdminIceCreamManager = () => {
     const [iceCreams, setIceCreams] = useState([]);
