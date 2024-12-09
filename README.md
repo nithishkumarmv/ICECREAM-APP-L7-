@@ -10,12 +10,12 @@ A web application for managing ice cream orders with user and admin features.
 - Browse and order ice creams.
 - Filters by Price
 - Search by Ice Cream name
-- add on Cart and remove from Cart.
+- Add on Cart and see total amount
+- Remove from Cart.
 - Customize ice cream and Book
 
 ### Admin Features
-- Manage inventory (add/remove ice creams).
-- CRUD operations
+- CRUD operations on Ice Cream
 - View and manage orders.
 
 ### Authentication
