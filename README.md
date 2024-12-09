@@ -22,8 +22,6 @@ A web application for managing ice cream orders with user and admin features.
 - Role-based login for users and admins.
 - Redirect to respective dashboards after login.
 
----
----
 
 ## 🛠 Pre Installed
 
@@ -34,8 +32,6 @@ A web application for managing ice cream orders with user and admin features.
 - npm 10.8.2
 - Axios installed
 
----
-
 ## 🛠 Tech Stack
 
 - *Frontend*: React.js  
@@ -43,7 +39,6 @@ A web application for managing ice cream orders with user and admin features.
 - *Database*: SQLite  
 - *API Communication*: RESTful APIs (JSON)
 
----
 ##🔧 Installation and Setup
 
 ### Clone the Repository
