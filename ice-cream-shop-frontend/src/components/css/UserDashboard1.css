@@ -1,0 +1,151 @@
+/* UserDashboard1.css */
+
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Container for the entire page */
+.admin-container1 {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Input container for adding/editing ice cream */
+.input-container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+
+}
+
+.input-field {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.action-button {
+    padding: 12px 20px;
+    margin-top: 10px;
+    width: 50%;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.update-button {
+    background-color: #FFC107;
+    color: white;
+}
+
+.action-button:hover {
+    background-color: #45a049;
+}
+
+/* List of ice creams */
+.ice-cream-list1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.ice-cream-item {
+    display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 22px;
+        margin-bottom: 11px;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 29%;
+}
+
+.ice-cream-item span {
+    font-size: 18px;
+    color: #333;
+}
+
+.edit-button,
+.delete-button {
+    padding: 8px 12px;
+    margin-left: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.delete-button {
+    background-color: #F44336;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #45a049;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .admin-container1 {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .input-field {
+        width: 90%;
+    }
+
+    .action-button {
+        width: 70%;
+    }
+
+    .ice-cream-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .edit-button,
+    .delete-button {
+        margin-top: 10px;
+        width: 100%;
+    }
+}
