@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './css/UserDashboard.css'; 
+import './css/UserDashboard.css';
 
 const UserDashboard = () => {
     const [iceCreams, setIceCreams] = useState([]);
     const [filteredIceCreams, setFilteredIceCreams] = useState([]);
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState([]);  // Initialize as an empty array
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
-    const [orders, setOrders] = useState([]); 
+    const [orders, setOrders] = useState([]);
     const username = 'user1'; 
 
     // Fetch available ice creams and orders
@@ -76,34 +76,41 @@ const UserDashboard = () => {
 
     const handleBook = async () => {
         try {
-            // Map through the cart to create individual orders
-            const orderDetails = cart.map(item => ({
+           const orderDetails = cart.map(item => ({
                 username,
                 ice_cream_name: item.name, 
                 quantity: item.quantity, 
                 total_price: item.price * item.quantity, 
                 date: new Date().toLocaleString(), 
             }));
-    
-            console.log("Order Details to send:", orderDetails); 
-    
-            // Sending each item in the cart separately to the backend
+
+            console.log("Order details:", orderDetails); 
+
+            // Send the order details to the backend (assuming there's a POST endpoint for creating an order)
             for (const order of orderDetails) {
                 const response = await axios.post('http://localhost:5000/api/orders', order);
                 console.log('Order placed:', response.data); 
             }
-    
-            // If successful, clear the cart and update orders
+
+            setCart([]);
+
+            setOrders([orderDetails, ...orders]);
+
             alert('Order placed successfully!');
-            setOrders([orderDetails, ...orders]); 
-            setCart([]); 
         } catch (error) {
             console.error('Error booking order:', error);
-            alert('There was an error placing your order. Please try again.');
+            if (error.response) {
+                console.error('Server Error:', error.response.data);
+                alert(`Error: ${error.response.data.message || 'There was an error placing your order. Please try again.'}`);
+            } else if (error.request) {
+                console.error('Request Error:', error.request);
+                alert('No response from the server. Please check your connection or try again later.');
+            } else {
+                console.error('Error:', error.message);
+                alert('An unexpected error occurred. Please try again.');
+            }
         }
     };
-    
-    
 
     return (
         <div className="dashboard-container">
@@ -167,7 +174,9 @@ const UserDashboard = () => {
                         </ul>
 
                         <div className="total-price">
-                            <strong>Total: ${cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}</strong>
+                            <strong>
+                                Total: ${cart && Array.isArray(cart) ? cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2) : 0}
+                            </strong>
                         </div>
 
                         <button onClick={handleBook} className="book-order-btn">
@@ -188,7 +197,7 @@ const UserDashboard = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.length === 0 ? (
+                    {orders && orders.length === 0 ? (
                         <tr>
                             <td colSpan="3">No orders yet.</td>
                         </tr>
@@ -198,15 +207,20 @@ const UserDashboard = () => {
                                 <td>{order.date}</td>
                                 <td>
                                     <ul>
-                                        {order.cart.map((item, itemIndex) => (
-                                            <li key={itemIndex}>
-                                                {item.name} - {item.quantity} x ${item.price.toFixed(2)}
-                                            </li>
-                                        ))}
+                                        {order.cart && order.cart.length > 0 ? (
+                                            order.cart.map((item, itemIndex) => (
+                                                <li key={itemIndex}>
+                                                    {item.name} - {item.quantity} x ${item.price.toFixed(2)}
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <li>No items in this order.</li>
+                                        )}
                                     </ul>
                                 </td>
                                 <td>
-                                    ${order.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0).toFixed(2)}
+                                    {/* Ensure order.cart exists and is an array before using .reduce() */}
+                                    ${order.cart && Array.isArray(order.cart) ? order.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0).toFixed(2) : 0}
                                 </td>
                             </tr>
                         ))

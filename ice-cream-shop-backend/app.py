@@ -20,12 +20,13 @@ def init_db():
                             name TEXT,
                             price REAL)''')
         # Create orders table
+        cursor.execute('DROP TABLE IF EXISTS orders')
         cursor.execute('''CREATE TABLE IF NOT EXISTS orders (
-                            id INTEGER PRIMARY KEY,
-                            username TEXT,
-                            ice_cream_name TEXT,
-                            quantity INTEGER,
-                            total_price REAL)''')
+            id INTEGER PRIMARY KEY,
+            username TEXT,
+            ice_cream_name TEXT,
+            quantity INTEGER,
+            total_price REAL)''')
         conn.commit()
 
 
@@ -35,6 +36,20 @@ def add_sample_users():
         cursor = conn.cursor()
         cursor.execute("INSERT OR IGNORE INTO users (username, password) VALUES ('admin', 'adminpass')")
         cursor.execute("INSERT OR IGNORE INTO users (username, password) VALUES ('user1', 'userpass')")
+        cursor.executemany('''INSERT INTO ice_creams (name, price) VALUES (?, ?)''', [
+            ('Vanilla', 2.50),
+            ('Chocolate', 3.00),
+            ('Strawberry', 2.75),
+            ('Mint', 3.25),
+            ('Cookie Dough', 3.50)
+        ])
+        cursor.executemany('''INSERT INTO orders (username, ice_cream_name, quantity, total_price) VALUES (?, ?, ?, ?)''', [
+            ('john_doe', 'Vanilla', 2, 5.00),
+            ('jane_smith', 'Chocolate', 1, 3.00),
+            ('alice_williams', 'Strawberry', 3, 8.25),
+            ('bob_brown', 'Mint', 1, 3.25),
+            ('charlie_davis', 'Cookie Dough', 2, 7.00)
+        ])
         conn.commit()
 
 @app.route('/api/login', methods=['POST'])
@@ -100,6 +115,33 @@ def get_ice_creams():
 
 
 
+@app.route('/api/orders', methods=['POST'])
+def create_order():
+    try:
+        # Extract order data from request
+        order_data = request.json
+        
+        username = order_data.get('username')
+        ice_cream_name = order_data.get('ice_cream_name')
+        quantity = order_data.get('quantity')
+        total_price = order_data.get('total_price')
+        date = order_data.get('date')
+
+        if not all([username, ice_cream_name, quantity, total_price, date]):
+            return jsonify({'message': 'Missing required fields'}), 400
+        
+        # Insert the order into the database
+        with sqlite3.connect('ice_cream.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute('''INSERT INTO orders (username, ice_cream_name, quantity, total_price)
+                              VALUES (?, ?, ?, ?)''', (username, ice_cream_name, quantity, total_price))
+            conn.commit()
+
+        return jsonify({'message': 'Order placed successfully'}), 201
+
+    except Exception as e:
+        print(f"Error placing order: {e}")
+        return jsonify({'message': 'Failed to place the order'}), 500
 
 
 
