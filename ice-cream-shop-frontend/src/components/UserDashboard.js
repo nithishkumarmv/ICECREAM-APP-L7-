@@ -141,7 +141,7 @@ const UserDashboard = () => {
                     filteredIceCreams.map(iceCream => (
                         <div key={iceCream[0]} className="ice-cream-item">
                             <div>
-                                <strong>{iceCream[1]}</strong> - ${iceCream[2].toFixed(2)}
+                                <strong>{iceCream[1]}</strong> - RS:{iceCream[2].toFixed(2)}
                             </div>
                             <button
                                 onClick={() => addToCart(iceCream)}
@@ -166,7 +166,7 @@ const UserDashboard = () => {
                             {cart.map((item, index) => (
                                 <li key={index} className="cart-item">
                                     <div>
-                                        <strong>{item.name}</strong> - {item.quantity} x ${item.price.toFixed(2)}
+                                        <strong>{item.name}</strong> - {item.quantity} x RS:{item.price.toFixed(2)}
                                     </div>
                                     <button onClick={() => removeFromCart(index)} className="remove-btn">Remove</button>
                                 </li>
@@ -175,7 +175,7 @@ const UserDashboard = () => {
 
                         <div className="total-price">
                             <strong>
-                                Total: ${cart && Array.isArray(cart) ? cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2) : 0}
+                                Total: RS:{cart && Array.isArray(cart) ? cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2) : 0}
                             </strong>
                         </div>
 
@@ -210,7 +210,7 @@ const UserDashboard = () => {
                                         {order.cart && order.cart.length > 0 ? (
                                             order.cart.map((item, itemIndex) => (
                                                 <li key={itemIndex}>
-                                                    {item.name} - {item.quantity} x ${item.price.toFixed(2)}
+                                                    {item.name} - {item.quantity} x RS:{item.price.toFixed(2)}
                                                 </li>
                                             ))
                                         ) : (
@@ -220,7 +220,7 @@ const UserDashboard = () => {
                                 </td>
                                 <td>
                                     {/* Ensure order.cart exists and is an array before using .reduce() */}
-                                    ${order.cart && Array.isArray(order.cart) ? order.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0).toFixed(2) : 0}
+                                    RS:{order.cart && Array.isArray(order.cart) ? order.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0).toFixed(2) : 0}
                                 </td>
                             </tr>
                         ))

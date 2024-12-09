@@ -37,18 +37,18 @@ def add_sample_users():
         cursor.execute("INSERT OR IGNORE INTO users (username, password) VALUES ('admin', 'adminpass')")
         cursor.execute("INSERT OR IGNORE INTO users (username, password) VALUES ('user1', 'userpass')")
         cursor.executemany('''INSERT INTO ice_creams (name, price) VALUES (?, ?)''', [
-            ('Vanilla', 2.50),
-            ('Chocolate', 3.00),
-            ('Strawberry', 2.75),
-            ('Mint', 3.25),
-            ('Cookie Dough', 3.50)
+            ('Vanilla', 250),
+            ('Chocolate', 300),
+            ('Strawberry', 275),
+            ('Mint', 325),
+            ('Cookie Dough', 350)
         ])
         cursor.executemany('''INSERT INTO orders (username, ice_cream_name, quantity, total_price) VALUES (?, ?, ?, ?)''', [
-            ('john_doe', 'Vanilla', 2, 5.00),
-            ('jane_smith', 'Chocolate', 1, 3.00),
-            ('alice_williams', 'Strawberry', 3, 8.25),
+            ('john_doe', 'Vanilla', 2, 20),
+            ('jane_smith', 'Chocolate', 1, 300),
+            ('alice_williams', 'Strawberry', 3, 825),
             ('bob_brown', 'Mint', 1, 3.25),
-            ('charlie_davis', 'Cookie Dough', 2, 7.00)
+            ('charlie_davis', 'Cookie Dough', 2, 700)
         ])
         conn.commit()
 

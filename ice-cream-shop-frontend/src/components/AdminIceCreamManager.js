@@ -94,7 +94,7 @@ const AdminIceCreamManager = () => {
             <ul className="ice-cream-list1">
                 {iceCreams.map(([id, name, price]) => (
                     <li key={id} className="ice-cream-item">
-                        <span>{name} - "RS:{price.toFixed(2)}</span>
+                        <span>{name} - RS:{price.toFixed(2)}</span>
                         <button onClick={() => startEditing(id, name, price)} className="edit-button">Edit</button>
                         <button onClick={() => handleDelete(id)} className="delete-button">Delete</button>
                     </li>
